@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Forecast</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-100 font-sans min-h-screen p-6">
+    <h1 class="text-4xl font-bold text-blue-400 mb-8">Demo Forecast</h1>
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4">
+        Next 7 Days Forecast
+      </h2>
+      <div class="flex flex-wrap gap-8">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-blue-300 mb-2">Sales Forecast</h3>
+          <canvas id="salesForecast"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-green-300 mb-2">
+            Revenue Forecast
+          </h3>
+          <canvas id="revenueForecast"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-yellow-300 mb-2">
+            Customer Complaints Forecast
+          </h3>
+          <canvas id="complaintsForecast"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-red-300 mb-2">
+            Downtime Minutes Forecast
+          </h3>
+          <canvas id="downtimeForecast"></canvas>
+        </div>
+      </div>
+    </section>
+    <script>
+      const forecastData = JSON.parse('{{ forecast_data | tojson | safe }}');
+      // Sales Forecast
+      new Chart(document.getElementById("salesForecast").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: forecastData.dates,
+          datasets: [{
+            label: "Sales",
+            data: forecastData.sales,
+            borderColor: "rgba(59,130,246,1)",
+            backgroundColor: "rgba(59,130,246,0.3)",
+            fill: true,
+          }]
+        }
+      });
+      // Revenue Forecast
+      new Chart(document.getElementById("revenueForecast").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: forecastData.dates,
+          datasets: [{
+            label: "Revenue",
+            data: forecastData.revenue,
+            borderColor: "rgba(34,197,94,1)",
+            backgroundColor: "rgba(34,197,94,0.3)",
+            fill: true,
+          }]
+        }
+      });
+      // Customer Complaints Forecast
+      new Chart(document.getElementById("complaintsForecast").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: forecastData.dates,
+          datasets: [{
+            label: "Customer Complaints",
+            data: forecastData.customer_complaints,
+            borderColor: "rgba(250,204,21,1)",
+            backgroundColor: "rgba(250,204,21,0.3)",
+            fill: true,
+          }]
+        }
+      });
+      // Downtime Minutes Forecast
+      new Chart(document.getElementById("downtimeForecast").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: forecastData.dates,
+          datasets: [{
+            label: "Downtime Minutes",
+            data: forecastData.downtime_minutes,
+            borderColor: "rgba(239,68,68,1)",
+            backgroundColor: "rgba(239,68,68,0.3)",
+            fill: true,
+          }]
+        }
+      });
+    </script>
+  </body>
+</html>

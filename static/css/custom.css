@@ -1,0 +1,28 @@
+/* Custom Dark Red Theme */
+
+/* Links */
+a {
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: #f87171; /* Tailwind red-400 */
+}
+
+/* Navbar active item (if you plan to add it later) */
+.nav-active {
+    color: #fca5a5; /* red-300 */
+    font-weight: bold;
+    border-bottom: 2px solid #ef4444; /* red-500 */
+}
+
+/* Buttons (if any are added later) */
+.btn-red {
+    background: linear-gradient(to right, #991b1b, #7f1d1d);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background 0.3s ease;
+}
+.btn-red:hover {
+    background: linear-gradient(to right, #dc2626, #991b1b);
+}

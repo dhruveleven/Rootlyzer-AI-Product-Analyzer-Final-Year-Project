@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+  <h1 class="text-5xl font-bold mb-6 text-white">Explore Demo Features</h1>
+  <p class="text-lg mb-10 text-gray-300 max-w-2xl">
+    Try out the demo version of our product postmortem analyzer with a sample dataset.
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <a href="{{ url_for('demo.demo_dashboard') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Dashboard
+    </a>
+
+    <a href="{{ url_for('demo.demo_forecast') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Forecast
+    </a>
+
+    <a href="{{ url_for('demo.demo_report') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Report
+    </a>
+
+    <a href="{{ url_for('demo.demo_anomaly') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Anomaly Detection
+    </a>
+
+    <a href="{{ url_for('demo.demo_benchmark') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Benchmarking
+    </a>
+
+    <a href="{{ url_for('demo.demo_rootcause') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Root Cause Analysis
+    </a>
+
+    <a href="{{ url_for('demo.demo_recommend') }}"
+      class="px-6 py-4 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200">
+      Demo Recommendations
+    </a>
+  </div>
+</section>
+{% endblock %}

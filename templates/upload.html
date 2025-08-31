@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Upload - Product Analyzer{% endblock %}
+{% block content %}
+<h2 class="text-2xl font-semibold">Upload your dataset</h2>
+<p class="mt-2 text-gray-300">Accepted types: CSV, XLSX, JSON. We will simulate processing for now.</p>
+
+<form class="mt-6 space-y-4" method="post" enctype="multipart/form-data">
+  <div class="rounded-xl border border-white/10 p-4 bg-white/5">
+    <input type="file" name="dataset" class="w-full file:mr-4 file:py-2 file:px-4 file:rounded-lg
+           file:border-0 file:bg-appred file:text-white hover:file:bg-red-500" />
+  </div>
+  <button type="submit"
+          class="px-5 py-3 rounded-xl bg-appred hover:bg-red-500 transition">
+    Process
+  </button>
+</form>
+{% endblock %}

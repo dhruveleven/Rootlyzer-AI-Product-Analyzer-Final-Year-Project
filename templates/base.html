@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}AI Product Analyzer{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/custom.css') }}"
+    />
+  </head>
+  <body
+    class="bg-gradient-to-br from-black via-gray-900 to-red-950 min-h-screen flex flex-col text-gray-100"
+  >
+    <!-- Navbar -->
+    <nav
+      class="bg-gradient-to-r from-red-700 via-red-800 to-black text-white shadow-lg"
+    >
+      <div
+        class="container mx-auto flex justify-between items-center py-3 px-6"
+      >
+        <h1 class="text-xl font-bold">
+          <a href="/" class="hover:text-yellow-400">⚡ AI Product Analyzer</a>
+        </h1>
+        <ul class="flex space-x-6">
+          <li><a href="/report" class="hover:text-red-300">Report</a></li>
+          <li><a href="/dashboard" class="hover:text-red-300">Dashboard</a></li>
+          <li><a href="/rca" class="hover:text-red-300">Root Cause</a></li>
+          <li><a href="/benchmark" class="hover:text-red-300">Benchmark</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-6 py-8">
+      <div class="bg-gray-900 shadow-xl rounded-2xl p-6 border border-red-800">
+        {% block content %}
+        <!-- Child pages inject content here -->
+        {% endblock %}
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="bg-black text-center py-4 text-sm text-gray-400 border-t border-red-900"
+    >
+      © 2025 AI Product Analyzer | Built with Flask + Tailwind
+    </footer>
+  </body>
+</html>

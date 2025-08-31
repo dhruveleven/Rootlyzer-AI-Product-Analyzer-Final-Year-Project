@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Home - AI Product Analyzer{% endblock %}
+
+{% block content %}
+<section class="grid md:grid-cols-2 gap-10 items-center">
+  <!-- Left Content -->
+  <div>
+    <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+      Smarter Analysis. Faster Decisions.
+    </h1>
+    <p class="mt-5 text-gray-300 text-lg">
+      Rootlyzer is an <span class="text-red-400 font-semibold">AI-powered analyzer</span> 
+      that helps teams understand their data better, 
+      predict their trends, and gives appropriate recommendations.
+    </p>
+    <div class="mt-6 flex gap-3">
+      <a
+        href="{{ url_for('main.upload') }}"
+        class="inline-flex items-center px-6 py-3 rounded-xl bg-red-700 hover:bg-red-600 text-white transition font-medium"
+      >
+        🚀 Get Started
+      </a>
+      <a
+        href="{{ url_for('demo.demo_landing') }}"
+        class="inline-flex items-center px-6 py-3 rounded-xl border border-red-500/40 hover:border-red-500/70 transition text-gray-200"
+      >
+        View Demo
+      </a>
+    </div>
+  </div>
+
+  <!-- Right Placeholder Image/Graphic -->
+  <div class="border border-red-800 rounded-2xl p-6 bg-gray-900/70">
+    <div class="h-48 rounded-xl bg-gradient-to-br from-red-700/30 to-black/40 flex items-center justify-center text-gray-400">
+      <span>📊 Analytics Preview</span>
+    </div>
+    <p class="mt-4 text-sm text-gray-400">
+      Visuals and insights will plug in here once real datasets are uploaded.
+    </p>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="mt-16">
+  <h2 class="text-2xl font-bold text-red-400 mb-6">Key Features</h2>
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="p-6 rounded-xl bg-gray-900/60 border border-red-800">
+      <h3 class="text-lg font-semibold">📑 Reports</h3>
+      <p class="mt-2 text-gray-300">Instant summaries of your dataset with KPIs, patterns, and anomalies.</p>
+    </div>
+    <div class="p-6 rounded-xl bg-gray-900/60 border border-red-800">
+      <h3 class="text-lg font-semibold">📊 Dashboards</h3>
+      <p class="mt-2 text-gray-300">Interactive dashboards that highlight performance trends and bottlenecks.</p>
+    </div>
+    <div class="p-6 rounded-xl bg-gray-900/60 border border-red-800">
+      <h3 class="text-lg font-semibold">🧐 Root Cause</h3>
+      <p class="mt-2 text-gray-300">AI-assisted hints that point to the most probable causes of failures.</p>
+    </div>
+    <div class="p-6 rounded-xl bg-gray-900/60 border border-red-800">
+      <h3 class="text-lg font-semibold">📈 Forecasts</h3>
+      <p class="mt-2 text-gray-300">Predictive analysis to anticipate risks and prevent future issues.</p>
+    </div>
+    <div class="p-6 rounded-xl bg-gray-900/60 border border-red-800">
+      <h3 class="text-lg font-semibold">⚡ Benchmarking</h3>
+      <p class="mt-2 text-gray-300">Compare your performance with industry standards or past projects.</p>
+    </div>
+    <div class="p-6 rounded-xl bg-gray-900/60 border border-red-800">
+      <h3 class="text-lg font-semibold">🤖 Recommendations</h3>
+      <p class="mt-2 text-gray-300">Actionable insights to improve reliability, efficiency, and outcomes.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="mt-16">
+  <h2 class="text-2xl font-bold text-red-400 mb-6">How to Use?</h2>
+  <ol class="space-y-4 text-gray-300">
+    <li><span class="font-semibold text-red-400">1. Upload Data →</span> Provide your product or operational dataset (CSV, Excel, etc.).</li>
+    <li><span class="font-semibold text-red-400">2. Automated Analysis →</span> The AI runs reports, detects anomalies, and builds dashboards.</li>
+    <li><span class="font-semibold text-red-400">3. Explore Insights →</span> Navigate through root cause findings, forecasts, and benchmarks.</li>
+    <li><span class="font-semibold text-red-400">4. Take Action →</span> Use recommendations to improve your product and prevent failures.</li>
+  </ol>
+</section>
+{% endblock %}

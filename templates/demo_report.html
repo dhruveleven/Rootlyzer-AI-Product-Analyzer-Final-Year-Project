@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-100 font-sans min-h-screen p-6">
+    <h1 class="text-4xl font-bold text-blue-400 mb-8">
+      Dataset Report Summary
+    </h1>
+    <section class="mb-8">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4">
+        AI-Generated Summary
+      </h2>
+      <div id="loading-indicator" class="mb-4 text-blue-400">Generating report... <span class="animate-pulse">▋</span></div>
+      <div id="report-container" class="mb-4 text-lg text-gray-300"></div>
+    </section>
+    <section class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-200 mb-4">Key Stats</h2>
+      <ul class="list-disc pl-6">
+        {% for stat in stats %}
+        <li class="mb-2">{{ stat }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const reportContainer = document.getElementById('report-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        
+        // Function to fetch streaming data
+        async function fetchStreamingReport() {
+          try {
+            const response = await fetch('/demo/report/stream');
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder();
+            let partialText = '';
+            
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              
+              // Decode the chunk and append to partial text
+              const chunk = decoder.decode(value, { stream: true });
+              partialText += chunk;
+              
+              // Convert markdown to HTML and update the container
+              reportContainer.innerHTML = marked.parse(partialText);
+            }
+            
+            // Hide loading indicator when done
+            loadingIndicator.style.display = 'none';
+          } catch (error) {
+            console.error('Error fetching streaming report:', error);
+            loadingIndicator.textContent = 'Error generating report. Please try again.';
+          }
+        }
+        
+        // Start fetching the streaming report
+        fetchStreamingReport();
+      });
+    </script>
+  </body>
+</html>

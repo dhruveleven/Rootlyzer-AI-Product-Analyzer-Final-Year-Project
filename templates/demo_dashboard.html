@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-gray-100 font-sans min-h-screen p-6">
+    <h1 class="text-4xl font-bold text-red-400 mb-8">Demo Dashboard</h1>
+
+    <!-- Summary Statistics -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4">
+        Summary Statistics
+      </h2>
+      <div class="overflow-x-auto bg-gray-800 p-4 rounded-xl shadow-lg">
+        <table class="min-w-full border border-gray-700 rounded-lg">
+          <thead class="bg-gray-700">
+            <tr>
+              <th class="px-4 py-2 border text-left">Metric</th>
+              {% for stats in summary %}
+              <th class="px-4 py-2 border text-left">
+                {{ stats['column'] if 'column' in stats else loop.index }}
+              </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% set first_stats = summary[0] %} {% for stat_name in
+            first_stats.keys() if stat_name != 'column' %}
+            <tr class="hover:bg-gray-700">
+              <td class="px-4 py-2 border font-medium">{{ stat_name }}</td>
+              {% for stats in summary %}
+              <td class="px-4 py-2 border">{{ stats[stat_name] }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Sample Data -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4">Sample Data</h2>
+      <div class="overflow-x-auto bg-gray-800 p-4 rounded-xl shadow-lg">
+        <table class="min-w-full border border-gray-700 rounded-lg">
+          <thead class="bg-gray-700">
+            <tr>
+              {% for col in sample_data[0].keys() %}
+              <th class="px-4 py-2 border text-left">{{ col }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in sample_data %}
+            <tr class="hover:bg-gray-700">
+              {% for val in row.values() %}
+              <td class="px-4 py-2 border">{{ val }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-semibold text-gray-200 mb-4">
+        Charts & Insights
+      </h2>
+      <div class="flex flex-wrap gap-8">
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-red-300 mb-2">Sales Over Time</h3>
+          <canvas id="salesOverTimeChart"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-red-300 mb-2">Revenue Over Time</h3>
+          <canvas id="revenueOverTimeChart"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-red-300 mb-2">
+            Customer Complaints by Product
+          </h3>
+          <canvas id="complaintsProductChart"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-red-300 mb-2">
+            Downtime Minutes by Region
+          </h3>
+          <canvas id="downtimeRegionChart"></canvas>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-xl shadow-lg w-full md:w-1/2 mb-8">
+          <h3 class="text-lg font-bold text-red-300 mb-2">
+            Marketing Spend vs Sales
+          </h3>
+          <canvas id="marketingVsSalesChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const chartData = JSON.parse('{{ chart_data | tojson | safe }}');
+
+      // Sales Over Time (Line Chart)
+      new Chart(document.getElementById("salesOverTimeChart").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: chartData.sales_over_time.labels,
+          datasets: [{
+            label: "Sales",
+            data: chartData.sales_over_time.values,
+            borderColor: "rgba(239, 68, 68, 1)",
+            backgroundColor: "rgba(239, 68, 68, 0.3)",
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#f87171" } } },
+          scales: { x: { ticks: { color: "#f3f4f6" } }, y: { ticks: { color: "#f3f4f6" } } }
+        }
+      });
+
+      // Revenue Over Time (Line Chart)
+      new Chart(document.getElementById("revenueOverTimeChart").getContext("2d"), {
+        type: "line",
+        data: {
+          labels: chartData.revenue_over_time.labels,
+          datasets: [{
+            label: "Revenue",
+            data: chartData.revenue_over_time.values,
+            borderColor: "rgba(34,197,94,1)",
+            backgroundColor: "rgba(34,197,94,0.3)",
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#22c55e" } } },
+          scales: { x: { ticks: { color: "#f3f4f6" } }, y: { ticks: { color: "#f3f4f6" } } }
+        }
+      });
+
+      // Customer Complaints by Product (Bar Chart)
+      new Chart(document.getElementById("complaintsProductChart").getContext("2d"), {
+        type: "bar",
+        data: {
+          labels: chartData.complaints_product.labels,
+          datasets: [{
+            label: "Complaints",
+            data: chartData.complaints_product.values,
+            backgroundColor: "rgba(59,130,246,0.7)",
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#3b82f6" } } },
+          scales: { x: { ticks: { color: "#f3f4f6" } }, y: { ticks: { color: "#f3f4f6" } } }
+        }
+      });
+
+      // Downtime Minutes by Region (Bar Chart)
+      new Chart(document.getElementById("downtimeRegionChart").getContext("2d"), {
+        type: "bar",
+        data: {
+          labels: chartData.downtime_region.labels,
+          datasets: [{
+            label: "Downtime (min)",
+            data: chartData.downtime_region.values,
+            backgroundColor: "rgba(250,204,21,0.7)",
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#facc15" } } },
+          scales: { x: { ticks: { color: "#f3f4f6" } }, y: { ticks: { color: "#f3f4f6" } } }
+        }
+      });
+
+      // Marketing Spend vs Sales (Scatter Plot)
+      new Chart(document.getElementById("marketingVsSalesChart").getContext("2d"), {
+        type: "scatter",
+        data: {
+          datasets: [{
+            label: "Marketing Spend vs Sales",
+            data: chartData.marketing_vs_sales.x.map((x, i) => ({x, y: chartData.marketing_vs_sales.y[i]})),
+            backgroundColor: "rgba(236,72,153,0.7)",
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { labels: { color: "#ec4899" } } },
+          scales: {
+            x: {
+              title: { display: true, text: "Marketing Spend", color: "#f3f4f6" },
+              ticks: { color: "#f3f4f6" }
+            },
+            y: {
+              title: { display: true, text: "Sales", color: "#f3f4f6" },
+              ticks: { color: "#f3f4f6" }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
