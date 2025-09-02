@@ -58,7 +58,7 @@ def stream_gemini_report(stats, highlights, sample_data):
 
 @demo_bp.route('/demo/report')
 def demo_report():
-    df = pd.read_csv("static/data/demo_dataset.csv")
+    df = demo_data
     summary_points = [
         f"Total sales: {df['sales'].sum()}",
         f"Average revenue: {df['revenue'].mean():.2f}",
@@ -74,7 +74,7 @@ def demo_report():
 
 @demo_bp.route('/demo/report/stream')
 def stream_report():
-    df = pd.read_csv("static/data/demo_dataset.csv")
+    df = demo_data
     summary_points = [
         f"Total sales: {df['sales'].sum()}",
         f"Average revenue: {df['revenue'].mean():.2f}",
@@ -151,16 +151,6 @@ def demo_dashboard():
         chart_data=chart_data,
     )
 
-
-@demo_bp.route('/demo/anomaly')
-def demo_anomaly():
-    return render_template("coming_soon.html", title="Demo Anomaly Detection")
-
-@demo_bp.route('/demo/rootcause')
-def demo_rootcause():
-    return render_template("coming_soon.html", title="Demo Root Cause Analysis")
-
-
 @demo_bp.route("/demo/forecast")
 def demo_forecast():
     forecast_days = 7
@@ -195,10 +185,14 @@ def demo_forecast():
         forecast_data=forecast_data,
     )
 
-@demo_bp.route('/demo/benchmark')
-def demo_benchmark():
-    return render_template("coming_soon.html", title="Demo Benchmarking")
-
-@demo_bp.route('/demo/recommend')
-def demo_recommend():
-    return render_template("coming_soon.html", title="Demo Recommendations")
+@demo_bp.route('/demo/<feature>')
+def demo_feature(feature):
+    # You can have a dictionary to map feature names to titles
+    feature_titles = {
+        "anomaly": "Demo Anomaly Detection",
+        "rootcause": "Demo Root Cause Analysis",
+        "benchmark": "Demo Benchmarking",
+        "recommend": "Demo Recommendations"
+    }
+    title = feature_titles.get(feature, "Coming Soon")
+    return render_template("coming_soon.html", title=title)
